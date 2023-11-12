@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:qr_scanner_project/custom_widgets/custom_button.dart';
 import 'package:qr_scanner_project/custom_widgets/custom_text.dart';
 import 'package:qr_scanner_project/views/qr_Scanner_screen/qr_scanner_screen.dart';
 
@@ -55,11 +56,6 @@ class _DataScreenState extends State<DataScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (medicine != null) {
-      flutterTts.speak(
-          '${widget.language == 'English' ? 'Your Medicine is' : 'دوائك  يكون'} $medicine!');
-    }
-
     return WillPopScope(
       onWillPop: () async {
         Navigator.pushAndRemoveUntil(
@@ -91,7 +87,7 @@ class _DataScreenState extends State<DataScreen> {
                 children: [
                   Container(
                     width: 1.sw,
-                    height: 200.w,
+                    height: 300.w,
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
                         color: Colors.black,
@@ -115,13 +111,30 @@ class _DataScreenState extends State<DataScreen> {
                           fontW: FontWeight.w300,
                           color: Colors.white,
                         ),
+                        SizedBox(height: 16.w),
+                        CustomButton(
+                          text: widget.language == 'English'
+                              ? 'Read aloud'
+                              : ' إقرأ ',
+                          fontSize: 20.sp,
+                          width: 200.w,
+                          radius: 15.r,
+                          textColor: Colors.black,
+                          bgColor: Colors.white,
+                          onTap: () {
+                            if (medicine != null) {
+                              flutterTts.speak(
+                                  '${widget.language == 'English' ? 'Your Medicine is' : 'دوائك  يكون'} $medicine!');
+                            }
+                          },
+                        )
                       ],
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 140.w),
                     width: 1.sw,
-                    height: 200.w,
+                    height: 250.w,
                     child: Align(
                         alignment: Alignment.bottomCenter,
                         child: Image.asset('assets/images/medicine.png')),

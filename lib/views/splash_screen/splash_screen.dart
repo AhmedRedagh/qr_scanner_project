@@ -9,7 +9,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _processingData(),
+      future: _processingData(context),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return SafeArea(
@@ -37,13 +37,18 @@ class SplashScreen extends StatelessWidget {
             ),
           );
         } else {
-          return const LanguageScreen();
+          return const SizedBox.shrink();
         }
       },
     );
   }
 
-  Future<void> _processingData() {
-    return Future.delayed(const Duration(seconds: 3));
+  Future<void> _processingData(context) {
+    return Future.delayed(const Duration(seconds: 3))
+        .whenComplete(() => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const LanguageScreen()),
+              (route) => false,
+            ));
   }
 }
